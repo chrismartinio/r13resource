@@ -22,7 +22,7 @@ class Lecture(db.Model):
     url = db.Column(db.String(300), nullable=False)
     
 
-class (db.Model):
+class Exercise(db.Model):
     """ Exercise """
 
     __tablename__ = 'exercices'

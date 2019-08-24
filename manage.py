@@ -2,7 +2,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from data import get_lectures
 from bs4 import BeautifulSoup
-from models import Lecture
+from models import Lecture, Exercise
 import requests
 
 from models import db
@@ -58,7 +58,7 @@ def get_all_exercies():
         if (soup.title is None):
             continue
         else:
-            new_exercise = Lecture(title=soup.title.string, url=link)
+            new_exercise = Exercise(title=soup.title.string, url=link)
             db.session.add(new_exercise)
             titles.append(soup.title.string)
 
