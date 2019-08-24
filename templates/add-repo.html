@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} r13 resource | add repos {% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h2>Add repos</h2>
+
+  <div class="row">
+    <form action="/submit-user" method="POST"  id="submit-user" class="col s12">
+      <div class="row">
+        <div class="input-field col">
+          <i class="fab fa-github prefix"></i>
+          <input name="git_username" id="git_username" type="text" class="validate">
+          <label for="git_username">username</label>
+        </div>
+        <div class="input-field col">
+          <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <p>Once you add your GitHub username, all of your r13 projects will be available through the
+    <a href="#">cohort code</a> section.</p>
+
+  <p>To ensure your repos are correctly parsed through the GitHub API, please follow
+    the naming convention of the 'starter code' supplied for each exercise.
+  </p>
+
+  <div class="code-block">
+    <p>
+      Test code stuff
+    </p>
+  </div>
+</div>
+
+{% endblock %}

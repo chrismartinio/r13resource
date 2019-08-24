@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/fonts/stylesheet.css">
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap" rel="stylesheet">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %} {% endblock %}</title>
+</head>
+
+<header>
+
+  <nav>
+    <ul id="slide-out" class="sidenav sidenav-fixed">
+      <a class="typewriter" href="/">
+        <div class="typewriter">
+          <h1>r13</h1>
+        </div>
+          <h4>resource</h4>
+      </a>
+      <li><a class="waves-effect waves-orange" href="#!">Add repos</a></li>
+      <li><a class="waves-effect waves-orange" href="/cohort-code">Cohort code</a></li>
+      <li><a class="waves-effect waves-orange" href="#!">Lectures</a></li>
+      <li><a href="#!">Exercises</a></li>
+      <li><a class="waves-effect waves-orange" href="#!">Additional Resources</a></li>
+      <li class="no-padding">
+        <ul class="collapsible collapsible-accordion">
+          <li>
+            <a class="collapsible-header waves-effect waves-orange">Lectures<i class="material-icons">chevron_right</i></a>
+            <div class="collapsible-body">
+              <ul class="submenu">
+                  {% for lecture in lectures %}
+                  <li><a class="waves-effect waves-orange" href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a></li>
+                  {% endfor %}
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+    </ul>
+    <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+  </nav>
+</header>
+
+<body>
+  <main>
+    {% block body %}
+
+
+    {% endblock %}
+  </main>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="/static/script.js"></script>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/af5357cb32.js"></script>
+
+  <!-- Axios Query -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+</body>
+
+</html>

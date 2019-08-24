@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %} r13 resource | cohort code {% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h2>Cohort code<code></code></h2>
+
+  <h5>Current users</h5>
+
+  {% for user in users %}
+  <div class="gituser">
+    <img class="gituser" src="{{ user.avatar_url }}">
+    {{ user.login }}
+  </div>
+  {% endfor %}
+
+
+  {% endblock %}
