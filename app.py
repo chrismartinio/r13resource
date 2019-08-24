@@ -1,5 +1,7 @@
 from flask import Flask, render_template, redirect, request, jsonify
 from models import db, connect_db, Lecture, GitUser
+from data import get_lectures
+from bs4 import BeautifulSoup
 import requests
 import os
 
@@ -61,7 +63,27 @@ def cohort_code():
 #     return render_template('new.html')
 
 
+# Pull current lectures
+
 @app.route('/lecture')
 def reveal_lecture():
+    soup = get_lectures()
+    links = []
+    titles = []
+
+    for link in soup.find_all('a'):
+        links.append('http://curric.rithmschool.com/r13/lectures/' +
+                     link.get('href'))
+    
+    for link in links:
+        if 'zip' in link:
+            continue
+        response = requests.get(link)
+        soup = BeautifulSoup(response.text)
+        if (soup.title is None):
+            continue
+        else:
+            titles.append(soup.title.string)
+        
     lectures = Lecture.query.order_by(Lecture.title)
-    return render_template('new.html', lectures=lectures)
+    return render_template('new.html', titles=titles, links=links, lectures=lectures)

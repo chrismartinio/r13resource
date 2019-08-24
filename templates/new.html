@@ -4,5 +4,16 @@
 
 {% block body %}
 
+<ul>
+  {% for title in titles %}
+  <li>{{ title }}</li>
+  {% endfor %}
+</ul>
+
+<ul>
+  {% for link in links %}
+  <li>{{ link }}</li>
+  {% endfor %}
+</ul>
 
 {% endblock %}
