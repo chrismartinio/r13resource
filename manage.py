@@ -1,6 +1,5 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from data import get_lectures
 from bs4 import BeautifulSoup
 from models import Lecture, Exercise
 import requests
@@ -17,7 +16,8 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def get_all_lectures():
 
-    soup = get_lectures()
+    response = requests.get('http://curric.rithmschool.com/r13/lectures/')
+    soup = BeautifulSoup(response.text)
     links = []
     titles = []
 
@@ -43,7 +43,8 @@ def get_all_lectures():
 @manager.command
 def get_all_exercises():
 
-    soup = get_lectures()
+    response = requests.get('http://curric.rithmschool.com/r13/exercises/')
+    soup = BeautifulSoup(response.text)
     links = []
     titles = []
 
