@@ -20,6 +20,16 @@ class Lecture(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(300), nullable=False)
+    
+
+class (db.Model):
+    """ Exercise """
+
+    __tablename__ = 'exercices'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), nullable=False)
+    url = db.Column(db.String(300), nullable=False)
 
 
 class GitUser(db.Model):
