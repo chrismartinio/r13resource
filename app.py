@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, jsonify
-from models import db, connect_db, Lecture, GitUser
+from models import db, connect_db, Lecture, GitUser, Exercise
 from data import get_lectures
 from bs4 import BeautifulSoup
 import requests
@@ -15,20 +15,30 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
-lectures = Lecture.query.all()
 
 @app.route('/')
 def show_index():
-    return render_template('index.html', lectures=lectures)
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    return render_template('index.html',
+                           lectures=lectures,
+                           exercises=exercises)
 
 
 @app.route('/add-repo')
 def show_add_repo():
-    return render_template('add-repo.html', lectures=lectures)
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    return render_template('add-repo.html',
+                           lectures=lectures,
+                           exercises=exercises)
 
 
 @app.route('/submit-user', methods=['POST'])
 def add_git_user():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+
     username = request.form['git_username']
     url = f'https://api.github.com/users/{username}/repos'
     new_user = GitUser(name=username, url=url)
@@ -36,11 +46,14 @@ def add_git_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect('/')
+    return redirect('/cohort-code', lectures=lectures, exercises=exercises)
 
 
 @app.route('/cohort-code')
 def cohort_code():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+
     users = GitUser.query.all()
     gitusers = []
 
@@ -50,7 +63,22 @@ def cohort_code():
 
     return render_template('cohort-code.html',
                            lectures=lectures,
+                           exercises=exercises,
                            users=gitusers)
+
+
+@app.route('/lectures')
+def show_lecture():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    lecture_id = int(request.args['id'])
+
+    lecture_url = Lecture.query.get(lecture_id).url
+
+    return render_template('lecture.html',
+                           lectures=lectures,
+                           exercises=exercises,
+                           url=lecture_url)
 
 
 # @app.route('/lecture/<lecture_id>')
@@ -62,35 +90,38 @@ def cohort_code():
 
 # Pull current lectures
 
+# @app.route('/lecture')
+# def reveal_lecture():
+#     soup = get_lectures()
+#     links = []
+#     titles = []
 
-@app.route('/lecture')
-def reveal_lecture():
-    soup = get_lectures()
-    links = []
-    titles = []
+#     for link in soup.find_all('a'):
+#         links.append('http://curric.rithmschool.com/r13/lectures/' +
+#                      link.get('href'))
 
-    for link in soup.find_all('a'):
-        links.append('http://curric.rithmschool.com/r13/lectures/' +
-                     link.get('href'))
+#     for link in links:
+#         if 'zip' in link:
+#             continue
+#         response = requests.get(link)
+#         soup = BeautifulSoup(response.text)
+#         if (soup.title is None):
+#             continue
+#         else:
+#             titles.append(soup.title.string)
 
-    for link in links:
-        if 'zip' in link:
-            continue
-        response = requests.get(link)
-        soup = BeautifulSoup(response.text)
-        if (soup.title is None):
-            continue
-        else:
-            titles.append(soup.title.string)
+#     lectures = Lecture.query.order_by(Lecture.title)
+#     return render_template('new.html',
+#                            titles=titles,
+#                            links=links,
+#                            lectures=lectures,
+#                            exercises=exercises)
 
-    lectures = Lecture.query.order_by(Lecture.title)
-    return render_template('new.html',
-                           titles=titles,
-                           links=links,
-                           lectures=lectures)
+# @app.route('/lectures')
+# def lecture_page():
 
-
-@app.route('/lectures')
-def lecture_page():
-    url = 'http://curric.rithmschool.com/r13/lectures/ajax/'
-    return render_template('lecture.html', url=url)
+#     url = 'http://curric.rithmschool.com/r13/lectures/ajax/'
+#     return render_template('lecture.html',
+#                            url=url,
+#                            exercises=exercises,
+#                            lectures=lectures)

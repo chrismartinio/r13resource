@@ -19,7 +19,6 @@ def get_all_lectures():
     response = requests.get('http://curric.rithmschool.com/r13/lectures/')
     soup = BeautifulSoup(response.text)
     links = []
-    titles = []
 
     for link in soup.find_all('a'):
         links.append('http://curric.rithmschool.com/r13/lectures/' +
@@ -35,7 +34,6 @@ def get_all_lectures():
         else:
             new_lecture = Lecture(title=soup.title.string, url=link)
             db.session.add(new_lecture)
-            titles.append(soup.title.string)
 
     db.session.commit()
 
@@ -46,7 +44,6 @@ def get_all_exercises():
     response = requests.get('http://curric.rithmschool.com/r13/exercises/')
     soup = BeautifulSoup(response.text)
     links = []
-    titles = []
 
     for link in soup.find_all('a'):
         links.append('http://curric.rithmschool.com/r13/exercises/' +
@@ -62,7 +59,6 @@ def get_all_exercises():
         else:
             new_exercise = Exercise(title=soup.title.string, url=link)
             db.session.add(new_exercise)
-            titles.append(soup.title.string)
 
     db.session.commit()
 

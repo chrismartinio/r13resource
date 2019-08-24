@@ -25,7 +25,7 @@ class Lecture(db.Model):
 class Exercise(db.Model):
     """ Exercise """
 
-    __tablename__ = 'exercices'
+    __tablename__ = 'exercises'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(100), nullable=False)

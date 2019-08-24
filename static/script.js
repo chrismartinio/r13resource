@@ -1,3 +1,5 @@
+// On document load
+
 document.addEventListener('DOMContentLoaded', function () {
   var options = {
     draggable: true,
@@ -12,18 +14,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-  // GitHub gets
 
-  async function connectProject(repo) {
-    let response = await axios.get(`https://api.github.com/repos/kayjitsu/${repo}`);
-    console.log(response);
-  }
-
-  async function getUser(username) {
-    let response = await axios.get(`https://api.github.com/repos/${username}/repos`);
-    return response;
-  }
-
-  
 
 });
+
+// $(function () {
+//   $(".lecture-link").on("click", function (e) {
+//     e.preventDefault(); // cancel the link itself
+//     let id = $(this).data('lecture-id');
+//     $('#main').append(`<iframe src='/lectures/?id=${id}'></iframe>`);
+//   });
+// });
