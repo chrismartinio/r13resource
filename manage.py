@@ -39,7 +39,7 @@ def get_all_lectures():
 
     db.session.commit()
 
-
+@manager.command
 def get_all_exercies():
 
     soup = get_lectures()
