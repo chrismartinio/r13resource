@@ -39,8 +39,9 @@ def get_all_lectures():
 
     db.session.commit()
 
+
 @manager.command
-def get_all_exercies():
+def get_all_exercises():
 
     soup = get_lectures()
     links = []
