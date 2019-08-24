@@ -48,7 +48,7 @@ def get_all_exercises():
     titles = []
 
     for link in soup.find_all('a'):
-        links.append('http://curric.rithmschool.com/r13/exercies/' +
+        links.append('http://curric.rithmschool.com/r13/exercises/' +
                      link.get('href'))
 
     for link in links:
