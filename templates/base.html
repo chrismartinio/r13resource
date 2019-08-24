@@ -37,7 +37,7 @@
             <div class="collapsible-body">
               <ul class="submenu">
                   {% for lecture in lectures %}
-                  <li><a class="waves-effect waves-orange" href="/lecture/{{ lecture.id }}">{{ lecture.title }}</a></li>
+                  <li><a class="waves-effect waves-orange" data-lecture-id="{{ lecture.id }}"" href="/lectures">{{ lecture.title }}</a></li>
                   {% endfor %}
               </ul>
             </div>

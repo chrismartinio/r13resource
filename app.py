@@ -62,8 +62,8 @@ def cohort_code():
 
 #     return render_template('new.html')
 
-
 # Pull current lectures
+
 
 @app.route('/lecture')
 def reveal_lecture():
@@ -74,7 +74,7 @@ def reveal_lecture():
     for link in soup.find_all('a'):
         links.append('http://curric.rithmschool.com/r13/lectures/' +
                      link.get('href'))
-    
+
     for link in links:
         if 'zip' in link:
             continue
@@ -84,6 +84,15 @@ def reveal_lecture():
             continue
         else:
             titles.append(soup.title.string)
-        
+
     lectures = Lecture.query.order_by(Lecture.title)
-    return render_template('new.html', titles=titles, links=links, lectures=lectures)
+    return render_template('new.html',
+                           titles=titles,
+                           links=links,
+                           lectures=lectures)
+
+
+@app.route('/lectures')
+def lecture_page():
+    url = 'http://curric.rithmschool.com/r13/lectures/ajax/'
+    return render_template('lecture.html', url=url)
