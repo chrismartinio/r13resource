@@ -15,16 +15,15 @@ app.config['SQLALCHEMY_ECHO'] = True
 connect_db(app)
 db.create_all()
 
+lectures = Lecture.query.all()
 
 @app.route('/')
 def show_index():
-    lectures = Lecture.query.order_by(Lecture.title)
     return render_template('index.html', lectures=lectures)
 
 
 @app.route('/add-repo')
 def show_add_repo():
-    lectures = Lecture.query.order_by(Lecture.title)
     return render_template('add-repo.html', lectures=lectures)
 
 
@@ -42,7 +41,6 @@ def add_git_user():
 
 @app.route('/cohort-code')
 def cohort_code():
-    lectures = Lecture.query.order_by(Lecture.title)
     users = GitUser.query.all()
     gitusers = []
 
