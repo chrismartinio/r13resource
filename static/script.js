@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
       let id = $(this).data('lecture-id');
       let url = $(this).data('lecture-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
-      e.parentNode.Sidenav('close');
     });
   });
   
@@ -29,6 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
       $(`#${id}`).addClass('active');
     });
   });
+
+  $('.sidenav li').click(() => {
+    $('.sidenav').sidenav('close');
+    console.log('close');
+  })
 
   console.log('loaded');
 
