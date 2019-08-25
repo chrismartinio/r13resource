@@ -19,6 +19,7 @@ def get_all_lectures():
     response = requests.get('https://curric.rithmschool.com/r13/lectures/')
     soup = BeautifulSoup(response.text)
     links = []
+    current_lectures = Lecture.query.all()
 
     for link in soup.find_all('a'):
         links.append('https://curric.rithmschool.com/r13/lectures/' +
@@ -32,8 +33,11 @@ def get_all_lectures():
         if (soup.title is None):
             continue
         else:
-            new_lecture = Lecture(title=soup.title.string, url=link)
-            db.session.add(new_lecture)
+            if (soup.title.string in current_lectures.title):
+                continue
+            else:
+                new_lecture = Lecture(title=soup.title.string, url=link)
+                db.session.add(new_lecture)
 
     db.session.commit()
 

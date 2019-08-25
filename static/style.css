@@ -176,3 +176,8 @@ div.code-block {
     height: 100vh;
   } 
 
+
+  /* Menu icon */
+  a.sidenav-trigger i {
+    color: black;
+  }
