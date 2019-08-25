@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $(function () {
     $(".lecture-link").on("click", function (e) {
       e.preventDefault(); 
+      console.log('click')
       let id = $(this).data('lecture-id');
       let url = $(this).data('lecture-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', function () {
   $(function () {
     $(".exercise-link").on("click", function (e) {
       e.preventDefault(); 
+      console.log('click')
       let id = $(this).data('exercise-id');
       let url = $(this).data('exercise-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
