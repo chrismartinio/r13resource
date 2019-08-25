@@ -1,0 +1,3 @@
+=== r13-resource Config Vars
+APP_SETTINGS: config.ProductionConfig
+DATABASE_URL: postgres://mpbfzsowvnggxn:51d66839235d4b6714f2fe83ba6491278e1535a04ddc7ed298a094882e8046e8@ec2-54-225-205-79.compute-1.amazonaws.com:5432/d3end2ecalueab

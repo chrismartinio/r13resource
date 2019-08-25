@@ -19,7 +19,11 @@ def get_all_lectures():
     response = requests.get('https://curric.rithmschool.com/r13/lectures/')
     soup = BeautifulSoup(response.text)
     links = []
-    current_lectures = Lecture.query.all()
+
+    # Set up current lectures to test for duplicates
+    current_lectures = []
+    for lecture in Lecture.query.all():
+        current_lectures.append(lecture.title)
 
     for link in soup.find_all('a'):
         links.append('https://curric.rithmschool.com/r13/lectures/' +
@@ -33,7 +37,7 @@ def get_all_lectures():
         if (soup.title is None):
             continue
         else:
-            if (soup.title.string in current_lectures.title):
+            if soup.title.string in current_lectures:
                 continue
             else:
                 new_lecture = Lecture(title=soup.title.string, url=link)
@@ -49,6 +53,11 @@ def get_all_exercises():
     soup = BeautifulSoup(response.text)
     links = []
 
+    # Set up current exercises to test for duplicates
+    current_exercises = []
+    for exercise in Exercise.query.all():
+        current_exercises.append(exercise.title)
+
     for link in soup.find_all('a'):
         links.append('https://curric.rithmschool.com/r13/exercises/' +
                      link.get('href'))
@@ -61,8 +70,11 @@ def get_all_exercises():
         if (soup.title is None):
             continue
         else:
-            new_exercise = Exercise(title=soup.title.string, url=link)
-            db.session.add(new_exercise)
+            if soup.title.string in current_exercises:
+                continue
+            else:
+                new_exercise = Exercise(title=soup.title.string, url=link)
+                db.session.add(new_exercise)
 
     db.session.commit()
 
