@@ -5,14 +5,18 @@
 {% block body %}
 
 <div class="container">
-  <h2>Cohort code<code></code></h2>
+  <h2 style="display">Cohort code</h2>
+
+
 
   <h5>Current users</h5>
+
+  <p>Click a user to see their public repos.</p>
 
   {% for user in users %}
   <div class="gituser">
     <img class="gituser" src="{{ user.avatar_url }}">
-    {{ user.login }}
+    {{ user.name }}
   </div>
   {% endfor %}
 

@@ -25,7 +25,7 @@ def show_index():
                            exercises=exercises)
 
 
-@app.route('/add-repo')
+@app.route('/add-user')
 def show_add_repo():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
@@ -46,7 +46,9 @@ def add_git_user():
     db.session.add(new_user)
     db.session.commit()
 
-    return redirect('/cohort-code', lectures=lectures, exercises=exercises)
+    users = GitUser.query.all()
+
+    return redirect('/cohort-code')
 
 
 @app.route('/cohort-code')
@@ -57,14 +59,14 @@ def cohort_code():
     users = GitUser.query.all()
     gitusers = []
 
-    for user in users:
-        response = requests.get(f'https://api.github.com/users/{user.name}')
-        gitusers.append(response.json())
-
+    # for user in users:
+    #     response = requests.get(f'https://api.github.com/users/{user.name}')
+    #     gitusers.append(response.json())
+    
     return render_template('cohort-code.html',
                            lectures=lectures,
                            exercises=exercises,
-                           users=gitusers)
+                           users=users)
 
 
 @app.route('/lectures')
