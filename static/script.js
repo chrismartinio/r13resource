@@ -12,16 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $(function () {
     $(".lecture-link").on("click", function (e) {
-      e.preventDefault(); 
+      e.preventDefault();
       let id = $(this).data('lecture-id');
       let url = $(this).data('lecture-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
     });
   });
-  
+
   $(function () {
     $(".exercise-link").on("click", function (e) {
-      e.preventDefault(); 
+      e.preventDefault();
       let id = $(this).data('exercise-id');
       let url = $(this).data('exercise-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
@@ -29,12 +29,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  $('.sidenav li').click(() => {
-    $('.sidenav').sidenav('close');
-    console.log('close');
-  })
+  $(function () {
+    $('.lecture-link').on('click', function (e) {
+      let nav = $(this).data('li-parent');
+      if ($(window).width() < 990) {
+        if (nav === 'no') {
+          $('.sidenav').sidenav('close');
+        } 
+      }
+    })
+  });
 
   console.log('loaded');
 
 });
-
