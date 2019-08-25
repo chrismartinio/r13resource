@@ -33,6 +33,8 @@ def get_all_lectures():
         if (soup.title is None):
             continue
         else:
+            import pdb
+            pdb.set_trace()
             if (soup.title.string in current_lectures.title):
                 continue
             else:
