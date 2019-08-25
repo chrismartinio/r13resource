@@ -16,12 +16,12 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def get_all_lectures():
 
-    response = requests.get('http://curric.rithmschool.com/r13/lectures/')
+    response = requests.get('https://curric.rithmschool.com/r13/lectures/')
     soup = BeautifulSoup(response.text)
     links = []
 
     for link in soup.find_all('a'):
-        links.append('http://curric.rithmschool.com/r13/lectures/' +
+        links.append('https://curric.rithmschool.com/r13/lectures/' +
                      link.get('href'))
 
     for link in links:
@@ -41,12 +41,12 @@ def get_all_lectures():
 @manager.command
 def get_all_exercises():
 
-    response = requests.get('http://curric.rithmschool.com/r13/exercises/')
+    response = requests.get('https://curric.rithmschool.com/r13/exercises/')
     soup = BeautifulSoup(response.text)
     links = []
 
     for link in soup.find_all('a'):
-        links.append('http://curric.rithmschool.com/r13/exercises/' +
+        links.append('https://curric.rithmschool.com/r13/exercises/' +
                      link.get('href'))
 
     for link in links:
