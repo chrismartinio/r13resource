@@ -26,6 +26,7 @@ def get_all_lectures():
     # Drop current lecture table
     engine = create_engine(ProductionConfig.SQLALCHEMY_DATABASE_URI)
     Lecture.__table__.drop(engine)
+    db.create_all()
 
     # Set up current lectures 
     current_lectures = []
@@ -61,6 +62,7 @@ def get_all_exercises():
     # Drop Exercise table
     engine = create_engine(ProductionConfig.SQLALCHEMY_DATABASE_URI)
     Exercise.__table__.drop(engine)
+    db.create_all()
 
     # Set up current exercises to test for duplicates
     current_exercises = []
