@@ -16,8 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let id = $(this).data('lecture-id');
       let url = $(this).data('lecture-url');
       $('#main').html(`<iframe src='${url}'></iframe>`);
-      instance.close();
-      // e.close();
+      e.parentNode.Sidenav('close');
     });
   });
   
