@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, jsonify, \
     url_for, json
-from models import *
+from models import GitRepo, GitUser, Lecture, Exercise, db, connect_db
 from data import *
 from bs4 import BeautifulSoup
 import requests
