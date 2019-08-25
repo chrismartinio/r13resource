@@ -156,8 +156,8 @@ div.code-block {
   .submenu li > a {
     font-size: 12px;
     margin-top: 0;
-    height: 30px;
-    line-height: 30px;
+    height: 30px!important;
+    line-height: 30px!important;
   }
 
   @media (min-width: 993px) {
@@ -174,4 +174,3 @@ div.code-block {
     height: 100vh;
   } 
 
-  
