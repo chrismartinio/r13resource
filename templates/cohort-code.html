@@ -5,18 +5,16 @@
 {% block body %}
 
 <div class="container">
-  <h2 style="display">Cohort code</h2>
+  <h2>Cohort code</h2>
 
 
 
-  <h5>Current users</h5>
+  <h5>Users</h5>
 
-  <p>Click a user to see their public repos.</p>
-
-  {% for user in users %}
+  {% for user in gitusers %}
   <div class="gituser">
-    <img class="gituser" src="{{ user.avatar_url }}">
-    {{ user.name }}
+    <img class="gituser" src="{{ user.owner_avatar }}">
+    {{ user.owner_name }}
   </div>
   {% endfor %}
 

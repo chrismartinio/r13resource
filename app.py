@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, jsonify
-from models import db, connect_db, Lecture, GitUser, Exercise
-from data import get_lectures
+from flask import Flask, render_template, redirect, request, jsonify, \
+    url_for, json
+from models import *
+from data import *
 from bs4 import BeautifulSoup
 import requests
 import os
@@ -31,16 +32,37 @@ def show_add_repo():
     exercises = Exercise.query.all()
     return render_template('add-repo.html',
                            lectures=lectures,
-                           exercises=exercises
-                           )
+                           exercises=exercises)
 
 
 @app.route('/submit-user', methods=['POST'])
 def add_git_user():
-    lectures = Lecture.query.all()
-    exercises = Exercise.query.all()
 
+    ## Check if user exists on Git
     username = request.form['git_username']
+    git_data = requests.get(f'https://api.github.com/users/{username}/repos')
+
+    ## Response if user not found
+    if git_data.status_code == 404:
+        return render_template('cohort-code.html', message="user not found")
+
+    ## Response if user valid
+    elif git_data.status_code == 200:
+        content = git_data.content
+        parsed_json = json.loads(content)
+
+        ## Call function to parse data
+        parse_data(parsed_json)
+
+        return render_template('cohort-code.html',
+                               message="user added successfully",
+                               gitusers=GitUser.query.all(),
+                               gitrepos=GitRepo.query.all())
+
+    ## Response if neither
+    else:
+        return render_template('cohort-code.html', message="unable to process")
+
     url = f'https://api.github.com/users/{username}/repos'
     new_user = GitUser(name=username, url=url)
 
@@ -56,18 +78,14 @@ def add_git_user():
 def cohort_code():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
+    gitusers = GitUser.query.all()
+    gitrepos = GitRepo.query.all()
 
-    users = GitUser.query.all()
-    gitusers = []
-
-    # for user in users:
-    #     response = requests.get(f'https://api.github.com/users/{user.name}')
-    #     gitusers.append(response.json())
-    
     return render_template('cohort-code.html',
                            lectures=lectures,
                            exercises=exercises,
-                           users=users)
+                           gitusers=gitusers,
+                           gitrepos=gitrepos)
 
 
 @app.route('/lectures')
