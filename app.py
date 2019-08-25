@@ -31,7 +31,8 @@ def show_add_repo():
     exercises = Exercise.query.all()
     return render_template('add-repo.html',
                            lectures=lectures,
-                           exercises=exercises)
+                           exercises=exercises
+                           )
 
 
 @app.route('/submit-user', methods=['POST'])
