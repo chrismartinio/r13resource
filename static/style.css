@@ -235,3 +235,6 @@ div.code-block {
   .container {
     width: 85%;
   }
+  .section {
+    max-width: 800px;
+  }

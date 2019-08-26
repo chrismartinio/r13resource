@@ -6,9 +6,24 @@
 
 <div class="container">
   <h2>welcome</h2>
-  <p>Here you can see all lectures, exercises, and solutions from teachers and cohort.</p>
-  <p>To get started, you can <a href="/add-repo">add your repos</a>, which will be updated for each exercise via GitHub's API.</p>
-  <p>If you'd like to add anything or contribute, please let me know. <a href="#">Source available here.</a></P>
+  <p>Here you can see all lectures, exercises, and GitHub repositories from cohort and instructors.</p>
+
+
+
+
+  <div class="section">
+
+    <h5><i>site info</i></h5>
+
+    <p>Built with Flask on a PostgreSQL database and deployed via 
+      <a href="https://dashboard.heroku.com/apps">Heroku</a>. GitHub data pulled from
+      the <a href="https://developer.github.com/v3/">GitHub API</a>. Lecture and exercise 
+      data pulled from <a href="http://curric.rithmschool.com/r13/lectures/">Rithm website</a>
+      using <a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">Beautiful Soup</a>. 
+      CSS framework is <a href="https://materializecss.com/">Materialize</a>. <br>
+      Source available <a href="https://github.com/kayjitsu/r13-resource">here</a>.
+    </p>
+  </div>
 </div>
 
 {% endblock %}
