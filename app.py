@@ -39,6 +39,9 @@ def show_add_repo():
 
 @app.route('/submit-user', methods=['POST'])
 def add_git_user():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    extras = Resource.query.all()
 
     ## Check if user exists on Git
     username = request.form['git_username']
@@ -59,7 +62,10 @@ def add_git_user():
         return render_template('github-users.html',
                                message="user added successfully",
                                gitusers=GitUser.query.all(),
-                               gitrepos=GitRepo.query.all())
+                               gitrepos=GitRepo.query.all(),
+                               lectures=lectures,
+                               exercises=exercises,
+                               extras=extras)
 
     ## Response if neither
     else:
@@ -123,7 +129,7 @@ def show_resources():
 def submit_resource():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    
+
     title = request.form['title']
     url = request.form['url']
 
@@ -150,14 +156,14 @@ def show_add_extra_page():
                            lectures=lectures,
                            exercises=exercises,
                            extras=extras)
-    
-    
+
+
 @app.route('/github-repos')
 def show_github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
     extras = Resource.query.all()
-    
+
     return render_template('github-repos.html',
                            lectures=lectures,
                            exercises=exercises,
