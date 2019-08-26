@@ -21,7 +21,7 @@ db.create_all()
 def show_index():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
     return render_template('index.html',
                            lectures=lectures,
                            exercises=exercises,
@@ -41,7 +41,7 @@ def show_add_repo():
 def add_git_user():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
 
     ## Check if user exists on Git
     username = request.form['git_username']
@@ -89,7 +89,7 @@ def github_repos():
     exercises = Exercise.query.all()
     gitusers = GitUser.query.all()
     gitrepos = GitRepo.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
 
     return render_template('github-users.html',
                            lectures=lectures,
@@ -117,7 +117,7 @@ def show_lecture():
 def show_resources():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
 
     return render_template('resources.html',
                            lectures=lectures,
@@ -150,7 +150,7 @@ def submit_resource():
 def show_add_extra_page():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
 
     return render_template('new-extra.html',
                            lectures=lectures,
@@ -162,7 +162,7 @@ def show_add_extra_page():
 def show_github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    extras = Resource.query.all()
+    extras = Resource.query.all.order_by(Resource.title)
 
     return render_template('github-repos.html',
                            lectures=lectures,
