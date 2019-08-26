@@ -36,6 +36,8 @@ class GitUser(db.Model):
     """ GitHub Users """
 
     __tablename__ = 'gitusers'
+    
+    repos = db.relationship('GitRepo')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     owner_name = db.Column(db.Text, nullable=False)
@@ -47,6 +49,8 @@ class GitRepo(db.Model):
     """ GitHub Repos """
 
     __tablename__ = 'gitrepos'
+    
+    user = db.relationship('GitUser')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     repo_name = db.Column(db.Text, nullable=False)
@@ -55,7 +59,7 @@ class GitRepo(db.Model):
     repo_last_push = db.Column(db.Text, nullable=False)
     repo_git_url = db.Column(db.Text, nullable=False)
     repo_size = db.Column(db.Text, nullable=False)
-    repo_owner = db.Column(db.Text, nullable=False)
+    repo_owner = db.Column(db.Integer, db.ForeignKey('gitusers.id'))
 
 
 class Resource(db.Model):

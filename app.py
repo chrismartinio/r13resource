@@ -77,7 +77,7 @@ def add_git_user():
     return redirect('/github-users')
 
 
-@app.route('/github-users')
+@app.route('/github-repos')
 def github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()

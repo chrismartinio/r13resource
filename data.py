@@ -13,8 +13,17 @@ def get_lectures():
 
 
 def parse_data(parsed_json):
-    
-    
+
+    owner_url = parsed_json[0]['owner']['html_url']
+    owner_name = parsed_json[0]['owner']['login']
+    owner_avatar = parsed_json[0]['owner']['avatar_url']
+
+    new_user = GitUser(owner_url=owner_url,
+                       owner_name=owner_name,
+                       owner_avatar=owner_avatar)
+
+    db.session.add(new_user)
+    db.session.commit()
 
     ## Parse repos
     for item in parsed_json:
@@ -24,7 +33,7 @@ def parse_data(parsed_json):
         repo_last_push = item['pushed_at']
         repo_git_url = item['git_url']
         repo_size = item['size']
-        repo_owner = item['owner']['login']
+        repo_owner = new_user.id
 
         new_repo = GitRepo(repo_name=repo_name,
                            repo_url=repo_url,
@@ -36,15 +45,6 @@ def parse_data(parsed_json):
 
         db.session.add(new_repo)
 
-    owner_url = parsed_json[0]['owner']['html_url']
-    owner_name = parsed_json[0]['owner']['login']
-    owner_avatar = parsed_json[0]['owner']['avatar_url']
-
-    new_user = GitUser(owner_url=owner_url,
-                       owner_name=owner_name,
-                       owner_avatar=owner_avatar)
-
-    db.session.add(new_user)
     db.session.commit()
 
     return 'user added'
