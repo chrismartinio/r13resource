@@ -5,35 +5,43 @@
 {% block body %}
 
 <div class="container">
-  <h2>Extra resources</h2>
+  <h2 class="resource">Extra resources</h2>
 
-  <ul class="resource">
-    {% for site in resources %}
-    <li><a href="{{ site.url }}">{{ site.title }}</a></li>
-    {% endfor %}
-  </ul>
-
-
-  <h4>Add more</h4>
-  <p>Please feel free to add any additional resources you have found to be useful</p>
-  <div class="row">
-    <form action="/resources" method="POST"  id="submit-user" class="col s12">
-      <div class="row">
-        <div class="input-field col">
-          <input name="title" id="title" type="text" class="validate">
-          <label for="title">title</label>
-        </div>
-        <div class="input-field col">
-          <input name="url" id="url" type="text" class="validate">
-          <label for="url">url</label>
-        </div>
-        <div class="input-field col">
-          <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
-
+  {% for site in resources %}
+  <a target="_blank" href="{{ site.url }}">
+    <div class="row">
+      <div class="col s4">
+        <div class="card-panel teal">
+          <span class="white-text">{{ site.title }}
+          </span>
         </div>
       </div>
-    </form>
-  </div>
+  </a>
+  {% endfor %}
+</div>
+</ul>
+
+<hr class="resource">
+<h5>Add more</h5>
+<p>Additional resources you have found to be useful</p>
+<div class="row">
+  <form action="/resources" method="POST" id="submit-user" class="col s12">
+    <div class="row">
+      <div class="input-field col">
+        <input name="title" id="title" type="text" class="validate">
+        <label for="title">title</label>
+      </div>
+      <div class="input-field col">
+        <input name="url" id="url" type="text" class="validate">
+        <label for="url">url</label>
+      </div>
+      <div class="input-field col">
+        <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
+
+      </div>
+    </div>
+  </form>
+</div>
 
 </div>
 

@@ -181,3 +181,18 @@ div.code-block {
   a.sidenav-trigger i {
     color: black;
   }
+
+  /* Resource page */
+
+  ul.resource {
+    list-style-type: disc;
+  }
+  ul.resource a {
+    font-size: 20px;
+  }
+  hr.resource {
+    border: 0;
+    border-top: 1px solid lightgray;
+    margin-bottom: -10px;
+    margin-top: 40px;
+  }
