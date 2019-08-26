@@ -56,3 +56,13 @@ class GitRepo(db.Model):
     repo_git_url = db.Column(db.Text, nullable=False)
     repo_size = db.Column(db.Text, nullable=False)
     repo_owner = db.Column(db.Text, nullable=False)
+
+
+class Resource(db.Model):
+    """ Additional Resources """
+
+    __tablename__ = 'resources'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.Text, nullable=False)
+    url = db.Column(db.Text, nullable=False)

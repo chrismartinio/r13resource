@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, jsonify, \
     url_for, json
-from models import GitRepo, GitUser, Lecture, Exercise, db, connect_db
+from models import GitRepo, GitUser, Lecture, Exercise, Resource, db, connect_db
 from data import *
 from bs4 import BeautifulSoup
 import requests
@@ -100,6 +100,38 @@ def show_lecture():
                            lectures=lectures,
                            exercises=exercises,
                            url=lecture_url)
+
+
+@app.route('/resources')
+def show_resources():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    resources = Resource.query.all()
+
+    return render_template('resources.html',
+                           lectures=lectures,
+                           exercises=exercises,
+                           resources=resources)
+
+
+@app.route('/resources', methods=['POST'])
+def submit_resource():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    title = request.form['title']
+    url = request.form['url']
+
+    new_resource = Resource(title=title, url=url)
+
+    db.session.add(new_resource)
+    db.session.commit()
+
+    resources = Resource.query.all()
+    return render_template('resources.html',
+                           lectures=lectures,
+                           exercises=exercises,
+                           resources=resources,
+                           message="resource added")
 
 
 # @app.route('/lecture/<lecture_id>')

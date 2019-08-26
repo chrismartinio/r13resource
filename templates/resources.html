@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} r13 resource | extra resources {% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h2>Extra resources</h2>
+
+  <ul class="resource">
+    {% for site in resources %}
+    <li><a href="{{ site.url }}">{{ site.title }}</a></li>
+    {% endfor %}
+  </ul>
+
+
+  <h4>Add more</h4>
+  <p>Please feel free to add any additional resources you have found to be useful</p>
+  <div class="row">
+    <form action="/resources" method="POST"  id="submit-user" class="col s12">
+      <div class="row">
+        <div class="input-field col">
+          <input name="title" id="title" type="text" class="validate">
+          <label for="title">title</label>
+        </div>
+        <div class="input-field col">
+          <input name="url" id="url" type="text" class="validate">
+          <label for="url">url</label>
+        </div>
+        <div class="input-field col">
+          <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}
