@@ -24,8 +24,8 @@
 
           <div class="collapsible-body">
 
-              {% for repo in user.repos %}
-              <a href="{{ repo.url }}"><p class="repo">{{ repo.repo_name }} </a><span class="repo">| created: {{ repo.repo_created }} | size: {{ repo.repo_size }}kb</span></p>
+              {% for repo in user.repos|sort(reverse=True,attribute="repo_last_push") %}
+              <a href="{{ repo.url }}"><p class="repo">{{ repo.repo_name }} </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
               {% endfor %}
 
           </div>
