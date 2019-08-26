@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} r13 resource | add link {% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h2>add extra resource</h2>
+  <div class="row">
+    <form action="/resources" method="POST" id="submit-user" class="col s12">
+      <div class="row">
+        <div class="input-field col">
+          <input name="title" id="title" type="text" class="validate">
+          <label for="title">title</label>
+        </div>
+        <div class="input-field col">
+          <input name="url" id="url" type="text" class="validate">
+          <label for="url">url</label>
+        </div>
+        <div class="input-field col">
+          <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

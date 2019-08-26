@@ -25,13 +25,13 @@
         </div>
           <h4>resource</h4>
       </a>
-      <li><a class="waves-effect waves-orange main-link" href="/add-user">Add user</a></li>
-      <li><a class="waves-effect waves-orange main-link" href="/cohort-code">Cohort code</a></li>
-      <li><a class="waves-effect waves-orange main-link" href="/resources">Extra resources</a></li>
+      <li><a class="waves-effect waves-orange main-link" href="/github-repos">repos</a></li>
+
+      <!-- lectures menu -->
       <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
           <li>
-            <a class="collapsible-header waves-effect waves-orange" data-li-parent="yes">Lectures<i class="material-icons">chevron_right</i></a>
+            <a class="collapsible-header waves-effect waves-orange" data-li-parent="yes">lectures<i class="material-icons">chevron_right</i></a>
             <div class="collapsible-body">
               <ul class="submenu">
                   {% for lecture in lectures %}
@@ -43,10 +43,12 @@
           </li>
         </ul>
       </li>
+
+      <!-- exercises menu -->
       <li class="no-padding">
         <ul class="collapsible collapsible-accordion">
           <li>
-            <a class="collapsible-header waves-effect waves-orange" data-li-parent="yes">Exercises<i class="material-icons">chevron_right</i></a>
+            <a class="collapsible-header waves-effect waves-orange" data-li-parent="yes">exercises<i class="material-icons">chevron_right</i></a>
             <div class="collapsible-body">
               <ul class="submenu">
                   {% for exercise in exercises %}
@@ -57,6 +59,23 @@
           </li>
         </ul>
       </li>
+
+      <!-- extras menu-->
+      <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header waves-effect waves-orange" data-li-parent="yes">extras<i class="material-icons">chevron_right</i></a>
+              <div class="collapsible-body">
+                <ul class="submenu">
+                    <li><a class="waves-effect waves-orange" href="/add-extra">* add new</a></li>
+                    {% for extra in extras %}
+                    <li><a class="waves-effect waves-orange" id="{{extra.id}}" target="_blank" href="{{ extra.url }}">{{ extra.title }}</a></li>
+                    {% endfor %}
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
     </ul>
 
     </ul>

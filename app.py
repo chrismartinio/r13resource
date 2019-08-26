@@ -21,9 +21,11 @@ db.create_all()
 def show_index():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
+    extras = Resource.query.all()
     return render_template('index.html',
                            lectures=lectures,
-                           exercises=exercises)
+                           exercises=exercises,
+                           extras=extras)
 
 
 @app.route('/add-user')
@@ -44,7 +46,7 @@ def add_git_user():
 
     ## Response if user not found
     if git_data.status_code == 404:
-        return render_template('cohort-code.html', message="user not found")
+        return render_template('github-repos.html', message="user not found")
 
     ## Response if user valid
     elif git_data.status_code == 200:
@@ -54,14 +56,15 @@ def add_git_user():
         ## Call function to parse data
         parse_data(parsed_json)
 
-        return render_template('cohort-code.html',
+        return render_template('github-repos.html',
                                message="user added successfully",
                                gitusers=GitUser.query.all(),
                                gitrepos=GitRepo.query.all())
 
     ## Response if neither
     else:
-        return render_template('cohort-code.html', message="unable to process")
+        return render_template('github-repos.html',
+                               message="unable to process")
 
     url = f'https://api.github.com/users/{username}/repos'
     new_user = GitUser(name=username, url=url)
@@ -71,17 +74,17 @@ def add_git_user():
 
     users = GitUser.query.all()
 
-    return redirect('/cohort-code')
+    return redirect('/github-repos')
 
 
-@app.route('/cohort-code')
-def cohort_code():
+@app.route('/github-repos')
+def github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
     gitusers = GitUser.query.all()
     gitrepos = GitRepo.query.all()
 
-    return render_template('cohort-code.html',
+    return render_template('github-repos.html',
                            lectures=lectures,
                            exercises=exercises,
                            gitusers=gitusers,
@@ -118,6 +121,7 @@ def show_resources():
 def submit_resource():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
+    
     title = request.form['title']
     url = request.form['url']
 
@@ -126,12 +130,24 @@ def submit_resource():
     db.session.add(new_resource)
     db.session.commit()
 
-    resources = Resource.query.all()
-    return render_template('resources.html',
+    extras = Resource.query.all()
+    return render_template('new-extra.html',
                            lectures=lectures,
                            exercises=exercises,
-                           resources=resources,
+                           extras=extras,
                            message="resource added")
+
+
+@app.route('/add-extra')
+def show_add_extra_page():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    extras = Resource.query.all()
+
+    return render_template('new-extra.html',
+                           lectures=lectures,
+                           exercises=exercises,
+                           extras=extras)
 
 
 # @app.route('/lecture/<lecture_id>')
