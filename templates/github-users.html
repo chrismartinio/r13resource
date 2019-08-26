@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} r13 resource | github users {% endblock %}
+
+{% block body %}
+
+<div class="container">
+  <h2>github users</h2>
+
+
+  <div class="row">
+    {% for user in gitusers %}
+    <a target="_blank" href="{{ user.owner_url }}?tab=repositories">
+      <div class="col s12 m6 l3">
+        <div class="repocard card white darken-1">
+          <div style="display: flex; align-items: center;" class="card-content black-text">
+            <img class="repo" src="{{ user.owner_avatar }}">
+            <p class="repo">{{ user.owner_name }}</p>
+          </div>
+        </div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+
+  <hr class="resource">
+  <h5>Add Github account</h5>
+
+  <div class="row">
+    <form action="/submit-user" method="POST" id="submit-user" class="col s12">
+      <div class="row">
+        <div class="input-field col">
+          <i class="fab fa-github prefix"></i>
+          <input name="git_username" id="git_username" type="text" class="validate">
+          <label for="git_username">username</label>
+        </div>
+        <div class="input-field col">
+          <button class="btn waves-effect waves-light orange" type="submit" name="action">Submit</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

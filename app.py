@@ -46,7 +46,7 @@ def add_git_user():
 
     ## Response if user not found
     if git_data.status_code == 404:
-        return render_template('github-repos.html', message="user not found")
+        return render_template('github-users.html', message="user not found")
 
     ## Response if user valid
     elif git_data.status_code == 200:
@@ -56,14 +56,14 @@ def add_git_user():
         ## Call function to parse data
         parse_data(parsed_json)
 
-        return render_template('github-repos.html',
+        return render_template('github-users.html',
                                message="user added successfully",
                                gitusers=GitUser.query.all(),
                                gitrepos=GitRepo.query.all())
 
     ## Response if neither
     else:
-        return render_template('github-repos.html',
+        return render_template('github-users.html',
                                message="unable to process")
 
     url = f'https://api.github.com/users/{username}/repos'
@@ -74,19 +74,21 @@ def add_git_user():
 
     users = GitUser.query.all()
 
-    return redirect('/github-repos')
+    return redirect('/github-users')
 
 
-@app.route('/github-repos')
+@app.route('/github-users')
 def github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
     gitusers = GitUser.query.all()
     gitrepos = GitRepo.query.all()
+    extras = Resource.query.all()
 
-    return render_template('github-repos.html',
+    return render_template('github-users.html',
                            lectures=lectures,
                            exercises=exercises,
+                           extras=extras,
                            gitusers=gitusers,
                            gitrepos=gitrepos)
 
@@ -109,12 +111,12 @@ def show_lecture():
 def show_resources():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
-    resources = Resource.query.all()
+    extras = Resource.query.all()
 
     return render_template('resources.html',
                            lectures=lectures,
                            exercises=exercises,
-                           resources=resources)
+                           extras=extras)
 
 
 @app.route('/resources', methods=['POST'])
@@ -145,6 +147,18 @@ def show_add_extra_page():
     extras = Resource.query.all()
 
     return render_template('new-extra.html',
+                           lectures=lectures,
+                           exercises=exercises,
+                           extras=extras)
+    
+    
+@app.route('/github-repos')
+def show_github_repos():
+    lectures = Lecture.query.all()
+    exercises = Exercise.query.all()
+    extras = Resource.query.all()
+    
+    return render_template('github-repos.html',
                            lectures=lectures,
                            exercises=exercises,
                            extras=extras)
