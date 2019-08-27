@@ -36,7 +36,7 @@ class GitUser(db.Model):
     """ GitHub Users """
 
     __tablename__ = 'gitusers'
-    
+
     repos = db.relationship('GitRepo')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -49,7 +49,7 @@ class GitRepo(db.Model):
     """ GitHub Repos """
 
     __tablename__ = 'gitrepos'
-    
+
     user = db.relationship('GitUser')
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -70,3 +70,12 @@ class Resource(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.Text, nullable=False)
     url = db.Column(db.Text, nullable=False)
+
+
+class Timestamp(db.Model):
+    """ Additional Resources """
+
+    __tablename__ = 'timestamp'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    time = db.Column(db.Text, nullable=False)

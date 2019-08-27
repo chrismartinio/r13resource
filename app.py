@@ -1,8 +1,9 @@
 from flask import Flask, render_template, redirect, request, jsonify, \
     url_for, json
-from models import GitRepo, GitUser, Lecture, Exercise, Resource, db, connect_db
+from models import Timestamp, GitRepo, GitUser, Lecture, Exercise, Resource, db, connect_db
 from data import *
 from bs4 import BeautifulSoup
+# from manage import TIME_STAMP
 import requests
 import os
 
@@ -15,7 +16,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 db.create_all()
-
 
 @app.route('/')
 def show_index():
@@ -96,13 +96,15 @@ def github_repos():
     gitusers = GitUser.query.all()
     gitrepos = GitRepo.query.all()
     extras = Resource.query.order_by(Resource.title).all()
+    timestamp = Timestamp.query.one()
 
     return render_template('github-users.html',
                            lectures=lectures,
                            exercises=exercises,
                            extras=extras,
                            gitusers=gitusers,
-                           gitrepos=gitrepos)
+                           gitrepos=gitrepos,
+                           timestamp=timestamp)
 
 
 @app.route('/lectures')
@@ -162,9 +164,10 @@ def show_github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
     extras = Resource.query.order_by(Resource.title).all()
+    timestamp = Timestamp.query.one()
 
     repos = GitRepo.query.order_by(
-        GitRepo.repo_last_push.desc()).limit(15).all()
+    GitRepo.repo_last_push.desc()).limit(15).all()
     users = GitUser.query.all()
 
     return render_template('github-repos.html',
@@ -172,7 +175,8 @@ def show_github_repos():
                            exercises=exercises,
                            extras=extras,
                            repos=repos,
-                           users=users)
+                           users=users,
+                           timestamp=timestamp)
 
 
 # @app.route('/lecture/<lecture_id>')

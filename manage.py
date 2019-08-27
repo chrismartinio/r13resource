@@ -1,10 +1,13 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
+from flask import json
 from bs4 import BeautifulSoup
 from sqlalchemy import create_engine
-from models import Lecture, Exercise
+from models import Lecture, Exercise, Timestamp, GitUser
 import requests
 from config import ProductionConfig
+from datetime import datetime, time
+from data import parse_data
 
 from models import db
 from app import app
@@ -14,7 +17,6 @@ manager = Manager(app)
 
 
 manager.add_command('db', MigrateCommand)
-
 
 @manager.command
 def get_all_lectures():
@@ -86,6 +88,33 @@ def get_all_exercises():
 
     db.session.commit()
 
+
+@manager.command
+def update_repos():
+    current_time = datetime.now()
+    new_time = (current_time.strftime("%c"))
+    
+    
+    # Update users
+    users = GitUser.query.all()
+    for user in users:
+        username = user.owner_name
+    
+        git_data = requests.get(f'https://api.github.com/users/{username}/repos')
+        content = git_data.content
+        parsed_json = json.loads(content)
+        parse_data(parsed_json)
+    
+    # Timestamp update
+    engine = create_engine(ProductionConfig.SQLALCHEMY_DATABASE_URI)
+    Timestamp.__table__.drop(engine)
+    db.create_all()
+    
+    new_timestamp = Timestamp(time=new_time)
+    
+    db.session.add(new_timestamp)
+    db.session.commit()
+    
 
 if __name__ == '__main__':
     manager.run()
