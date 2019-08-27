@@ -254,9 +254,6 @@ div.code-block {
     display: flex;
     align-items: center;
   }
-  a.repolink:hover {
-  
-  }
  
   .repo-owner {
     color: black;
@@ -283,5 +280,5 @@ div.code-block {
     width: 85%;
   }
   .section {
-    max-width: 800px;
+    max-width: 700px;
   }
