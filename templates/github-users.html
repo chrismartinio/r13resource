@@ -5,27 +5,26 @@
 {% block body %}
 
 <div class="container">
+ 
   <h2>github repos</h2>
 
 
   <div class="row">
-    {% for user in gitusers %}
+    {% for user in gitusers|sort(attribute="owner_name") %}
     <!-- <a target="_blank" href="{{ user.owner_url }}?tab=repositories"> -->
     <div class="col s12 m6 l6">
       <ul class="collapsible">
         <li>
           <div class="collapsible-header">
-            <!-- <div class="repocard card white darken-1">
-                <div style="display: flex; align-items: center;" class="card-content black-text"> -->
             <img class="repo" src="{{ user.owner_avatar }}">
             <p class="repo">{{ user.owner_name }}</p>
           </div>
 
-
           <div class="collapsible-body">
 
               {% for repo in user.repos|sort(reverse=True,attribute="repo_last_push") %}
-              <a href="{{ repo.url }}"><p class="repo">{{ repo.repo_name }} </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
+              <a target="_blank" href="{{ repo.repo_url }}"><p class="repo">
+              {{ repo.repo_name }} </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
               {% endfor %}
 
           </div>
@@ -48,7 +47,7 @@
       <div class="row">
         <div class="input-field col">
           <i class="fab fa-github prefix"></i>
-          <input name="git_username" id="git_username" type="text" class="validate">
+          <input required="" name="git_username" id="git_username" type="text" class="validate">
           <label for="git_username">username</label>
         </div>
         <div class="input-field col">

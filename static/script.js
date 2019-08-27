@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
           $('.sidenav').sidenav('close');
         }
       }
-    })
+    });
   });
 
   // Sidenav sticky highlights for exercises
@@ -71,6 +71,57 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   });
 
-  console.log('loaded');
 
+
+  $('#submit-user').on('submit', async function (e) {
+    e.preventDefault();
+
+    let username = $('#git_username').val();
+    let response = await axios.post('/submit-user', {
+      username
+    });
+
+    if (response.data === 404) {
+      M.toast({
+        html: 'user not found'
+      });
+    } else if (response.data === 200) {
+      M.toast({
+        html: 'user added successfully'
+      });
+      setTimeout(function () {
+        location.reload();
+      }, 1000);
+    } else {
+      M.toast({
+        html: 'unable to process'
+      });
+    }
+    console.log(response);
+  });
+
+  $('#submit-resource').on('submit', async function (e) {
+    e.preventDefault();
+
+    let title = $('#resource-title').val();
+    let url = $('#resource-url').val();
+    console.log(title, url);
+    let response = await axios.post('/resources', {
+      title,
+      url
+    });
+
+    if (response.data === 200) {
+      M.toast({
+        html: 'resource added'
+      });
+      setTimeout(function () {
+        location.reload();
+      }, 1000);
+    } else {
+      M.toast({
+        html: 'unable to add'
+      })
+    }
+  });
 });

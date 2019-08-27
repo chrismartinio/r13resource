@@ -44,43 +44,54 @@ def add_git_user():
     extras = Resource.query.order_by(Resource.title).all()
 
     ## Check if user exists on Git
-    username = request.form['git_username']
+    username = request.json['username']
     git_data = requests.get(f'https://api.github.com/users/{username}/repos')
 
     ## Response if user not found
     if git_data.status_code == 404:
-        return render_template('github-users.html', message="user not found")
-
-    ## Response if user valid
+        return '404'
+    
     elif git_data.status_code == 200:
         content = git_data.content
         parsed_json = json.loads(content)
-
-        ## Call function to parse data
+        
+        ## Parse data and add user
         parse_data(parsed_json)
-
-        return render_template('github-users.html',
-                               message="user added successfully",
-                               gitusers=GitUser.query.all(),
-                               gitrepos=GitRepo.query.all(),
-                               lectures=lectures,
-                               exercises=exercises,
-                               extras=extras)
-
-    ## Response if neither
+        return '200'
+    
     else:
-        return render_template('github-users.html',
-                               message="unable to process")
+        return '499'
+    
+    
+        # return render_template('github-users.html',
+        #                        gitusers=GitUser.query.all(),
+        #                        gitrepos=GitRepo.query.all(),
+        #                        lectures=lectures,
+        #                        exercises=exercises,
+        #                        extras=extras,
+        #                        message=msg)
 
-    url = f'https://api.github.com/users/{username}/repos'
-    new_user = GitUser(name=username, url=url)
+        #  return render_template('github-users.html',
+        #                        message="user added successfully",
+        #                        gitusers=GitUser.query.all(),
+        #                        gitrepos=GitRepo.query.all(),
+        #                        lectures=lectures,
+        #                        exercises=exercises,
+        #                        extras=extras)
+  
 
-    db.session.add(new_user)
-    db.session.commit()
 
-    users = GitUser.query.all()
 
-    return redirect('/github-users')
+
+    # url = f'https://api.github.com/users/{username}/repos'
+    # new_user = GitUser(name=username, url=url)
+
+    # db.session.add(new_user)
+    # db.session.commit()
+
+    # users = GitUser.query.all()
+
+    # return redirect('/github-users')
 
 
 @app.route('/github-repos')
@@ -130,8 +141,8 @@ def submit_resource():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
 
-    title = request.form['title']
-    url = request.form['url']
+    title = request.json['title']
+    url = request.json['url']
 
     new_resource = Resource(title=title, url=url)
 
@@ -139,11 +150,7 @@ def submit_resource():
     db.session.commit()
 
     extras = Resource.query.all()
-    return render_template('new-extra.html',
-                           lectures=lectures,
-                           exercises=exercises,
-                           extras=extras,
-                           message="resource added")
+    return '200'
 
 
 @app.route('/add-extra')
