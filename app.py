@@ -138,8 +138,6 @@ def show_resources():
 
 @app.route('/resources', methods=['POST'])
 def submit_resource():
-    lectures = Lecture.query.all()
-    exercises = Exercise.query.all()
 
     title = request.json['title']
     url = request.json['url']
@@ -149,7 +147,6 @@ def submit_resource():
     db.session.add(new_resource)
     db.session.commit()
 
-    extras = Resource.query.all()
     return '200'
 
 
