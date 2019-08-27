@@ -48,3 +48,43 @@ def parse_data(parsed_json):
     db.session.commit()
 
     return 'user added'
+
+
+def parse_data_update(parsed_json, user_id):
+
+    user = GitUser.query.get(user_id)
+    user.owner_url = parsed_json[0]['owner']['html_url']
+    user.owner_name = parsed_json[0]['owner']['login']
+    user.owner_avatar = parsed_json[0]['owner']['avatar_url']
+
+    updated_user = GitUser(owner_url=user.owner_url,
+                           owner_name=user.owner_name,
+                           owner_avatar=user.owner_avatar)
+
+    db.session.add(updated_user)
+    db.session.commit()
+
+    ## Parse repos
+    for item in parsed_json:
+        repo = GitRepo.query.get(item['id'])
+        repo.repo_name = item['name']
+        repo.repo_url = item['html_url']
+        repo.repo_created = item['created_at']
+        repo.repo_last_push = item['pushed_at']
+        repo.repo_git_url = item['git_url']
+        repo.repo_size = item['size']
+        repo.repo_owner = user.id
+
+        updated_repo = GitRepo(repo_name=repo.repo_name,
+                               repo_url=repo.repo_url,
+                               repo_created=repo.repo_created,
+                               repo_last_push=repo.repo_last_push,
+                               repo_git_url=repo.repo_git_url,
+                               repo_size=repo.repo_size,
+                               repo_owner=repo.repo_owner)
+
+        db.session.add(updated_repo)
+
+    db.session.commit()
+
+    return 'user added'
