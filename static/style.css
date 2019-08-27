@@ -198,7 +198,7 @@ div.code-block {
   }
 
 
-  /* Git hub repos page */
+  /* Git hub users page */
 
   div.nav-wrapper > div {
     background-color: teal;
@@ -228,6 +228,53 @@ div.code-block {
   span.repo {
     color: lightgrey;
     font-size: 12px;
+  }
+
+
+  /* Github repos page */
+
+  .repos {
+    width: 500px;
+    padding: 10px;
+    box-shadow: 2px 2px 2px 2px rgba(0,0,0,0.5);
+    width: 500px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+  }
+  .repos:hover {
+    background-color: #f1f1f1;
+  }
+
+  .singlerepo {
+ 
+
+  }
+  a.repolink {
+    display: flex;
+    align-items: center;
+  }
+  a.repolink:hover {
+  
+  }
+ 
+  .repo-owner {
+    color: black;
+    margin-right: 5px;
+  }
+  .repo-time {
+    color: black;
+    font-size: 11px;
+  }
+  .repo-name {
+    margin-right: 5px;
+  }
+  .repo-time {
+    align-items: bottom;
+  }
+  img.gitimg {
+    max-width: 35px;
+    margin-right: 10px;
   }
 
   /* Container */

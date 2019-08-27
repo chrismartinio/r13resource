@@ -50,19 +50,18 @@ def add_git_user():
     ## Response if user not found
     if git_data.status_code == 404:
         return '404'
-    
+
     elif git_data.status_code == 200:
         content = git_data.content
         parsed_json = json.loads(content)
-        
+
         ## Parse data and add user
         parse_data(parsed_json)
         return '200'
-    
+
     else:
         return '499'
-    
-    
+
         # return render_template('github-users.html',
         #                        gitusers=GitUser.query.all(),
         #                        gitrepos=GitRepo.query.all(),
@@ -78,10 +77,6 @@ def add_git_user():
         #                        lectures=lectures,
         #                        exercises=exercises,
         #                        extras=extras)
-  
-
-
-
 
     # url = f'https://api.github.com/users/{username}/repos'
     # new_user = GitUser(name=username, url=url)
@@ -94,7 +89,7 @@ def add_git_user():
     # return redirect('/github-users')
 
 
-@app.route('/github-repos')
+@app.route('/github-users')
 def github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
@@ -168,10 +163,16 @@ def show_github_repos():
     exercises = Exercise.query.all()
     extras = Resource.query.order_by(Resource.title).all()
 
+    repos = GitRepo.query.order_by(
+        GitRepo.repo_last_push.desc()).limit(15).all()
+    users = GitUser.query.all()
+
     return render_template('github-repos.html',
                            lectures=lectures,
                            exercises=exercises,
-                           extras=extras)
+                           extras=extras,
+                           repos=repos,
+                           users=users)
 
 
 # @app.route('/lecture/<lecture_id>')

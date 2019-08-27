@@ -5,8 +5,23 @@
 {% block body %}
 
 <div class="container">
-  <h2>github repos</h2>
+  <h2>github recent repos</h2>
 
+  {% for repo in repos %}
+  <div class="repos">
+    <a target="_blank" href="{{ repo.repo_url }}" class="repolink"><img class="gitimg" src="{{ repo.user.owner_avatar }}"">
+      <div class="singlerepo">
+      <span class=" repo-name">{{ repo.repo_name }} </span>
+      <span class="repo-owner"> | {{ repo.user.owner_name }}</span><br>
+      <span class="repo-time">last updated: {{ repo.repo_last_push }} </span>
+      <span class="repo-time">size: {{ repo.repo_size }}kb</span>
   </div>
+  </a>
 
-  {% endblock %}
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
