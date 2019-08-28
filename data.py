@@ -13,7 +13,7 @@ def get_lectures():
 
 
 def parse_data(parsed_json):
-    
+
     owner_url = parsed_json[0]['actor']['url']
     owner_name = parsed_json[0]['actor']['login']
     owner_avatar = parsed_json[0]['actor']['avatar_url']
@@ -30,16 +30,19 @@ def parse_data(parsed_json):
             repo_name = item['repo']['name']
             repo_url = item['repo']['url']
             repo_push = item['created_at']
-            repo_commit = item['payload']['commits'][0]['message']
             repo_owner = new_user.id
+            commits = item['payload']['commits']
+            for msg in reversed(commits):
+                new_repo = GitRepo(repo_name=repo_name,
+                                   repo_url=repo_url,
+                                   repo_push=repo_push,
+                                   repo_commit=msg['message'],
+                                   repo_owner=repo_owner)
 
-            new_repo = GitRepo(repo_name=repo_name,
-                               repo_url=repo_url,
-                               repo_push=repo_push,
-                               repo_commit=repo_commit,
-                               repo_owner=repo_owner)
+                import pdb
+                pdb.set_trace()
 
-            db.session.add(new_repo)
+                db.session.add(new_repo)
 
     db.session.commit()
 
