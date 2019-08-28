@@ -54,7 +54,9 @@ def add_git_user():
 
     ## Check if user exists on Git
     username = request.json['username']
-    git_data = requests.get(f'https://api.github.com/users/{username}/repos')
+    timezone = {'Time-Zone':'PST8PDT'}
+    git_data = requests.get(f'https://api.github.com/users/{username}/events',
+                            params=timezone)
 
     ## Check if user exists on local db
     if check_local_user(username) == '480':
@@ -181,8 +183,7 @@ def show_github_repos():
     extras = Resource.query.order_by(Resource.title).all()
     timestamp = Timestamp.query.one()
 
-    repos = GitRepo.query.order_by(
-        GitRepo.repo_last_push.desc()).limit(15).all()
+    repos = GitRepo.query.order_by(GitRepo.repo_push.desc()).limit(15).all()
     users = GitUser.query.all()
 
     return render_template('github-repos.html',

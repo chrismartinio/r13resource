@@ -266,7 +266,7 @@ div.code-block {
     font-size: 11px;
   }
   .repo-name {
-    margin-right: 5px;
+    /* margin-right: 5px; */
   }
   .repo-time {
     align-items: bottom;

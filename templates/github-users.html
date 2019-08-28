@@ -22,11 +22,11 @@
 
           <div class="collapsible-body">
 
-            {% for repo in user.repos|sort(reverse=True,attribute="repo_last_push") %}
+            {% for repo in user.repos|sort(reverse=True,attribute="repo_push") %}
             <a target="_blank" href="{{ repo.repo_url }}">
               <p class="repo">
                 {{ repo.repo_name }}
-            </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
+            </a><span class="repo"> {{ repo.repo_push}} | "{{ repo.repo_commit }}"</span></p>
             {% endfor %}
 
           </div>

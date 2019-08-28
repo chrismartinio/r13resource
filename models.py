@@ -55,10 +55,8 @@ class GitRepo(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     repo_name = db.Column(db.Text, nullable=False)
     repo_url = db.Column(db.Text, nullable=False)
-    repo_created = db.Column(db.Text, nullable=False)
-    repo_last_push = db.Column(db.Text, nullable=False)
-    repo_git_url = db.Column(db.Text, nullable=False)
-    repo_size = db.Column(db.Text, nullable=False)
+    repo_push = db.Column(db.Text, nullable=False)
+    repo_commit = db.Column(db.Text, nullable=False)
     repo_owner = db.Column(db.Integer, db.ForeignKey('gitusers.id'))
 
 

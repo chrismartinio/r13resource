@@ -102,10 +102,11 @@ def update_repos():
 
     # Update users
     users = LocalUser.query.all()
+    timezone = {'Time-Zone':'PST8PDT'}
     for user in users:
         username = user.localuser
         git_data = requests.get(
-            f'https://api.github.com/users/{username}/repos')
+            f'https://api.github.com/users/{username}/events', params=timezone)
         content = git_data.content
         parsed_json = json.loads(content)
         parse_data(parsed_json)

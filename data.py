@@ -13,6 +13,38 @@ def get_lectures():
 
 
 def parse_data(parsed_json):
+    
+    owner_url = parsed_json[0]['actor']['url']
+    owner_name = parsed_json[0]['actor']['login']
+    owner_avatar = parsed_json[0]['actor']['avatar_url']
+
+    new_user = GitUser(owner_url=owner_url,
+                       owner_name=owner_name,
+                       owner_avatar=owner_avatar)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    for item in parsed_json:
+        if item['type'] == 'PushEvent':
+            repo_name = item['repo']['name']
+            repo_url = item['repo']['url']
+            repo_push = item['created_at']
+            repo_commit = item['payload']['commits'][0]['message']
+            repo_owner = new_user.id
+
+            new_repo = GitRepo(repo_name=repo_name,
+                               repo_url=repo_url,
+                               repo_push=repo_push,
+                               repo_commit=repo_commit,
+                               repo_owner=repo_owner)
+
+            db.session.add(new_repo)
+
+    db.session.commit()
+
+
+def parse_data2(parsed_json):
 
     owner_url = parsed_json[0]['owner']['html_url']
     owner_name = parsed_json[0]['owner']['login']
