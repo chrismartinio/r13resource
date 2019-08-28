@@ -54,7 +54,7 @@ def add_git_user():
 
     ## Check if user exists on Git
     username = request.json['username']
-    timezone = {'Time-Zone': 'PST8PDT'}
+    timezone = {'Time-Zone': 'America/Los_Angeles'}
     git_data = requests.get(
         f'https://api.github.com/users/{username}/events?per_page=100',
         params=timezone)

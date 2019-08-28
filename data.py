@@ -31,18 +31,16 @@ def parse_data(parsed_json):
             repo_url = item['repo']['url']
             repo_push = item['created_at']
             repo_owner = new_user.id
-            commits = item['payload']['commits']
-            for msg in reversed(commits):
-                new_repo = GitRepo(repo_name=repo_name,
-                                   repo_url=repo_url,
-                                   repo_push=repo_push,
-                                   repo_commit=msg['message'],
-                                   repo_owner=repo_owner)
+            commits = item['payload']['commits'][-1]
 
-                import pdb
-                pdb.set_trace()
+            new_repo = GitRepo(
+                repo_name=repo_name,
+                repo_url=repo_url,
+                repo_push=repo_push,
+                repo_commit=commits['message'],
+                repo_owner=repo_owner)
 
-                db.session.add(new_repo)
+            db.session.add(new_repo)
 
     db.session.commit()
 

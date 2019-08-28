@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %} r13 resource | github repos {% endblock %}
+{% block title %} r13 resource | recent commits {% endblock %}
 
 {% block body %}
 
 <div class="container">
-  <h2>recent repos</h2>
+  <h2>recent commits</h2>
   <p class="time"><i>Last updated {{ timestamp.time }}</i></p>
 
   {% for repo in repos %}
   <div class="repos">
-    <a target="_blank" href="{{ repo.repo_url }}" class="repolink"><img class="gitimg" src="{{ repo.user.owner_avatar }}"">
+    <a target="_blank" href="https://www.github.com/{{ repo.repo_name }}" class="repolink"><img class="gitimg" src="{{ repo.user.owner_avatar }}"">
       <div class="singlerepo">
       <span class=" repo-name">{{ repo.repo_name }}</span>
       <span class="repo-owner">| {{ repo.user.owner_name }}</span><br>

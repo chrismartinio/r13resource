@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %} r13 resource | github repos {% endblock %}
+{% block title %} r13 resource | users {% endblock %}
 
 {% block body %}
 
 <div class="container">
 
-  <h2>github users</h2>
+  <h2>users</h2>
   <p class="time"><i>Last updated {{ timestamp.time }}</i></p>
 
   <div class="row">
@@ -23,10 +23,10 @@
           <div class="collapsible-body">
 
             {% for repo in user.repos|sort(reverse=True,attribute="repo_push") %}
-            <a target="_blank" href="{{ repo.repo_url }}">
+            <a target="_blank" href="https://www.github.com/{{ repo.repo_name }}">
               <p class="repo">
                 {{ repo.repo_name }}
-            </a><span class="repo"> {{ repo.repo_push}} | "{{ repo.repo_commit }}"</span></p>
+            </a><span class="repo"> {{ repo.repo_push }} | "{{ repo.repo_commit }}"</span></p>
             {% endfor %}
 
           </div>
