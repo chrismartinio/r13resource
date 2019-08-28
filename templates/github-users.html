@@ -5,12 +5,9 @@
 {% block body %}
 
 <div class="container">
- 
+
   <h2>github users</h2>
   <p class="time"><i>Last updated {{ timestamp.time }}</i></p>
-  <p>Tap to see repos</p>
-
-
 
   <div class="row">
     {% for user in gitusers|sort(attribute="owner_name") %}
@@ -25,10 +22,12 @@
 
           <div class="collapsible-body">
 
-              {% for repo in user.repos|sort(reverse=True,attribute="repo_last_push") %}
-              <a target="_blank" href="{{ repo.repo_url }}"><p class="repo">
-              {{ repo.repo_name }} </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
-              {% endfor %}
+            {% for repo in user.repos|sort(reverse=True,attribute="repo_last_push") %}
+            <a target="_blank" href="{{ repo.repo_url }}">
+              <p class="repo">
+                {{ repo.repo_name }}
+            </a><span class="repo">| created: {{ repo.repo_last_push }} | size: {{ repo.repo_size }}kb</span></p>
+            {% endfor %}
 
           </div>
         </li>
@@ -39,7 +38,7 @@
     {% endfor %}
   </div>
 
-  
+
 
 
   <hr class="resource">
