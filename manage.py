@@ -46,6 +46,8 @@ def get_all_lectures():
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
+        if (soup.title.string == 'Rithm Curriculum'):
+            continue
         else:
             new_lecture = Lecture(title=soup.title.string, url=link)
             db.session.add(new_lecture)
@@ -77,9 +79,12 @@ def get_all_exercises():
     for link in links:
         if 'zip' in link:
             continue
+        
         response = requests.get(link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
+            continue
+        if (soup.title.string == 'Rithm Curriculum'):
             continue
         else:
             new_exercise = Exercise(title=soup.title.string, url=link)
@@ -102,7 +107,7 @@ def update_repos():
 
     # Update users
     users = LocalUser.query.all()
-    timezone = {'Time-Zone': 'America/Los_Angeles'}
+    timezone = {'Time-Zone': 'PST8PDT'}
     for user in users:
         username = user.localuser
         git_data = requests.get(
