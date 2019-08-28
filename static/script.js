@@ -80,8 +80,11 @@ document.addEventListener('DOMContentLoaded', function () {
     let response = await axios.post('/submit-user', {
       username
     });
-
-    if (response.data === 404) {
+    if (response.data === 480) {
+      M.toast({
+        html: 'user already exists'
+      })
+    } else if (response.data === 404) {
       M.toast({
         html: 'user not found'
       });

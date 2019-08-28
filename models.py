@@ -79,3 +79,12 @@ class Timestamp(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     time = db.Column(db.Text, nullable=False)
+
+
+class LocalUser(db.Model):
+    """ Local user database """
+
+    __table_name_ = 'localusers'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    localuser = db.Column(db.Text, nullable=False)

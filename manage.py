@@ -99,11 +99,12 @@ def update_repos():
     users = GitUser.query.all()
     for user in users:
         username = user.owner_name
+        user_id = user.id
     
         git_data = requests.get(f'https://api.github.com/users/{username}/repos')
         content = git_data.content
         parsed_json = json.loads(content)
-        parse_data(parsed_json)
+        parse_data_update(parsed_json, user_id)
     
     # Timestamp update
     engine = create_engine(ProductionConfig.SQLALCHEMY_DATABASE_URI)

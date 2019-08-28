@@ -1,9 +1,9 @@
 from flask import Flask, render_template, redirect, request, jsonify, \
     url_for, json
-from models import Timestamp, GitRepo, GitUser, Lecture, Exercise, Resource, db, connect_db
+from models import Timestamp, LocalUser, GitRepo, GitUser, Lecture
+from models import Exercise, Resource, db, connect_db
 from data import *
 from bs4 import BeautifulSoup
-# from manage import TIME_STAMP
 import requests
 import os
 
@@ -16,6 +16,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 connect_db(app)
 db.create_all()
+
 
 @app.route('/')
 def show_index():
@@ -37,6 +38,14 @@ def show_add_repo():
                            exercises=exercises)
 
 
+def check_local_user(username):
+    localusers = LocalUser.query.all()
+    for localuser in localusers:
+        user_exists = LocalUser.query.filter_by(localuser=username).first()
+        if user_exists:
+            return '480'
+
+
 @app.route('/submit-user', methods=['POST'])
 def add_git_user():
     lectures = Lecture.query.all()
@@ -47,11 +56,17 @@ def add_git_user():
     username = request.json['username']
     git_data = requests.get(f'https://api.github.com/users/{username}/repos')
 
-    ## Response if user not found
-    if git_data.status_code == 404:
+    ## Check if user exists on local db
+    if check_local_user(username) == '480':
+        return '480'
+
+    # Response if user not found
+    elif git_data.status_code == 404:
         return '404'
 
     elif git_data.status_code == 200:
+        new_user = LocalUser(localuser=username)
+        db.session.add(new_user)
         content = git_data.content
         parsed_json = json.loads(content)
 
@@ -167,7 +182,7 @@ def show_github_repos():
     timestamp = Timestamp.query.one()
 
     repos = GitRepo.query.order_by(
-    GitRepo.repo_last_push.desc()).limit(15).all()
+        GitRepo.repo_last_push.desc()).limit(15).all()
     users = GitUser.query.all()
 
     return render_template('github-repos.html',
