@@ -240,7 +240,7 @@ div.code-block {
   /* Github repos page */
 
   .repos {
-    max-width: 450px;
+    max-width: 500px;
     width: 100%;
     padding: 10px;
     box-shadow: .5px .5px 1px .5px rgba(0,0,0,0.4);
