@@ -106,7 +106,7 @@ def update_repos():
     for user in users:
         username = user.localuser
         git_data = requests.get(
-            f'https://api.github.com/users/{username}/events', params=timezone)
+            f'https://api.github.com/users/{username}/events?per_page=100', params=timezone)
         content = git_data.content
         parsed_json = json.loads(content)
         parse_data(parsed_json)
