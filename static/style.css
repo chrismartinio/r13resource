@@ -93,7 +93,7 @@ nav {
   box-shadow: none;
 }
 .sidenav > li a > i {
-  transition: transform .1s ease;
+  transition: transform .2s ease;
 }
 .arrow-down {
   transform: rotate(90deg);
