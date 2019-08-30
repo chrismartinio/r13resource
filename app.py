@@ -184,7 +184,7 @@ def show_github_repos():
     extras = Resource.query.order_by(Resource.title).all()
     timestamp = Timestamp.query.one()
 
-    repos = GitRepo.query.order_by(GitRepo.repo_push.desc()).limit(15).all()
+    repos = GitRepo.query.order_by(GitRepo.repo_push.desc()).limit(30).all()
     users = GitUser.query.all()
 
     for repo in repos:
