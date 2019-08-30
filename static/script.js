@@ -1,5 +1,5 @@
-// On document load
 
+// On document load
 document.addEventListener('DOMContentLoaded', function () {
   var options = {
     draggable: true,
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   $('.collapsible').collapsible();
 
+  // load iframe for lecture link
   $(function () {
     $(".lecture-link").on("click", function (e) {
       e.preventDefault();
@@ -19,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // load iframe for exercise link
   $(function () {
     $(".exercise-link").on("click", function (e) {
       e.preventDefault();
@@ -29,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Sidenav highlights
+  // Sidenav highlights for lectures
   $(function () {
     $('.lecture-link').on('click', function (e) {
 
@@ -72,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
 
-
+  // add new github user form
   $('#submit-user').on('submit', async function (e) {
     e.preventDefault();
 
@@ -92,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
       M.toast({
         html: 'user added successfully'
       });
+      $('.git-submit').trigger('reset');
       setTimeout(function () {
         location.reload();
       }, 1000);
@@ -100,9 +103,9 @@ document.addEventListener('DOMContentLoaded', function () {
         html: 'unable to process'
       });
     }
-    console.log(response);
   });
 
+  // add resource form
   $('#submit-resource').on('submit', async function (e) {
     e.preventDefault();
 
@@ -118,6 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
       M.toast({
         html: 'resource added'
       });
+      $('.extra-form').trigger('reset');
       setTimeout(function () {
         location.reload();
       }, 1000);
@@ -128,3 +132,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+
+  // Sidenav arrows
+  $('.arrow1').on('click', function(e) {
+    $('.icon-arrow1').toggleClass('arrow-down');
+  });
+  $('.arrow2').on('click', function(e) {
+    $('.icon-arrow2').toggleClass('arrow-down');
+  });
+  $('.arrow3').on('click', function(e) {
+    $('.icon-arrow3').toggleClass('arrow-down');
+  });
