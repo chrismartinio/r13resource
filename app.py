@@ -187,6 +187,10 @@ def show_github_repos():
     repos = GitRepo.query.order_by(GitRepo.repo_push.desc()).limit(15).all()
     users = GitUser.query.all()
 
+    for repo in repos:
+        time = repo.repo_push
+        repo.repo_push = convert_time(time)
+
     return render_template('github-repos.html',
                            lectures=lectures,
                            exercises=exercises,

@@ -1,4 +1,6 @@
 import requests
+import datetime
+import pytz
 from bs4 import BeautifulSoup
 from models import GitRepo, GitUser, db
 
@@ -10,6 +12,14 @@ def get_lectures():
     soup = BeautifulSoup(response.text)
 
     return soup
+
+
+def convert_time(source_time):
+    tz = pytz.timezone('America/Los_Angeles')
+    source = datetime.datetime.strptime(source_time, '%Y-%m-%dT%H:%M:%SZ')
+    newdate = tz.fromutc(source)
+
+    return newdate.strftime('%a %b %d %H:%M:%S')
 
 
 def parse_data(parsed_json):
@@ -33,12 +43,11 @@ def parse_data(parsed_json):
             repo_owner = new_user.id
             commits = item['payload']['commits'][-1]
 
-            new_repo = GitRepo(
-                repo_name=repo_name,
-                repo_url=repo_url,
-                repo_push=repo_push,
-                repo_commit=commits['message'],
-                repo_owner=repo_owner)
+            new_repo = GitRepo(repo_name=repo_name,
+                               repo_url=repo_url,
+                               repo_push=repo_push,
+                               repo_commit=commits['message'],
+                               repo_owner=repo_owner)
 
             db.session.add(new_repo)
 
