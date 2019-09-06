@@ -36,14 +36,17 @@ def get_all_lectures():
     for link in links:
         if 'zip' in link:
             continue
-        response = requests.get('https://curric.rithmschool.com/r13/lectures/' + link)
+        response = requests.get(
+            'https://curric.rithmschool.com/r13/lectures/' + link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
         if (soup.title.string == 'Rithm Curriculum'):
             continue
         else:
-            new_lecture = Lecture(title=link, url='https://curric.rithmschool.com/r13/lectures/' + link)
+            new_lecture = Lecture(
+                title=link,
+                url='https://curric.rithmschool.com/r13/lectures/' + link)
             db.session.add(new_lecture)
 
     db.session.commit()
@@ -68,21 +71,23 @@ def get_all_exercises():
 
     # Search soup for links
     for link in soup.find_all('a'):
-        links.append('https://curric.rithmschool.com/r13/exercises/' +
-                     link.get('href'))
+        links.append(link.get('href'))
 
     for link in links:
         if 'zip' in link:
             continue
 
-        response = requests.get(link)
+        response = requests.get(
+            'https://curric.rithmschool.com/r13/exercises/' + link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
         if (soup.title.string == 'Rithm Curriculum'):
             continue
         else:
-            new_exercise = Exercise(title=soup.title.string, url=link)
+            new_exercise = Exercise(
+                title=link,
+                url='https://curric.rithmschool.com/r13/exercises/' + link)
             db.session.add(new_exercise)
 
     db.session.commit()
