@@ -16,7 +16,9 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       let id = $(this).data('lecture-id');
       let url = $(this).data('lecture-url');
+      let title = $(this).data('lecture-title');
       $('#main').html(`<iframe src='${url}'></iframe>`);
+      document.title = `r13 | ${title}`;
     });
   });
 
@@ -26,8 +28,10 @@ document.addEventListener('DOMContentLoaded', function () {
       e.preventDefault();
       let id = $(this).data('exercise-id');
       let url = $(this).data('exercise-url');
+      let title = $(this).data('exercise-title');
       $('#main').html(`<iframe src='${url}'></iframe>`);
       $(`#${id}`).addClass('active');
+      document.title = `r13 | ${title}`;
     });
   });
 

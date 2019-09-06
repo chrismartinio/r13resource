@@ -37,7 +37,7 @@
               <ul class="submenu">
                   {% for lecture in lectures %}
                   
-                  <li><a class="waves-effect waves-orange lecture-link" id="{{lecture.id}}" data-li-parent="no" data-lecture-id="{{ lecture.id }}" data-lecture-url="{{lecture.url}}">{{ lecture.title }}</a></li>
+                  <li><a class="waves-effect waves-orange lecture-link" id="{{lecture.id}}" data-li-parent="no" data-lecture-title="{{ lecture.title }}" data-lecture-id="{{ lecture.id }}" data-lecture-url="{{lecture.url}}">{{ lecture.title }}</a></li>
                   {% endfor %}
               </ul>
             </div>
@@ -53,7 +53,7 @@
             <div class="collapsible-body">
               <ul class="submenu">
                   {% for exercise in exercises %}
-                  <li><a class="waves-effect waves-orange exercise-link" id="{{exercise.id}}" data-li-parent="no" data-exercise-url="{{ exercise.url }}" data-exercise-id="{{ exercise.id }}">{{ exercise.title }}</a></li>
+                  <li><a class="waves-effect waves-orange exercise-link" id="{{exercise.id}}" data-li-parent="no" data-exercise-title="{{ exercise.title }}" data-exercise-url="{{ exercise.url }}" data-exercise-id="{{ exercise.id }}">{{ exercise.title }}</a></li>
                   {% endfor %}
               </ul>
             </div>
