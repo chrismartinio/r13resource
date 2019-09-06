@@ -30,26 +30,20 @@ def get_all_lectures():
     Lecture.__table__.drop(engine)
     db.create_all()
 
-    # Set up current lectures
-    current_lectures = []
-    for lecture in Lecture.query.all():
-        current_lectures.append(lecture.title)
-
     for link in soup.find_all('a'):
-        links.append('https://curric.rithmschool.com/r13/lectures/' +
-                     link.get('href'))
+        links.append(link.get('href'))
 
     for link in links:
         if 'zip' in link:
             continue
-        response = requests.get(link)
+        response = requests.get('https://curric.rithmschool.com/r13/lectures/' + link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
         if (soup.title.string == 'Rithm Curriculum'):
             continue
         else:
-            new_lecture = Lecture(title=soup.title.string, url=link)
+            new_lecture = Lecture(title=link, url='https://curric.rithmschool.com/r13/lectures/' + link)
             db.session.add(new_lecture)
 
     db.session.commit()
@@ -72,6 +66,7 @@ def get_all_exercises():
     for exercise in Exercise.query.all():
         current_exercises.append(exercise.title)
 
+    # Search soup for links
     for link in soup.find_all('a'):
         links.append('https://curric.rithmschool.com/r13/exercises/' +
                      link.get('href'))
@@ -79,7 +74,7 @@ def get_all_exercises():
     for link in links:
         if 'zip' in link:
             continue
-        
+
         response = requests.get(link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
