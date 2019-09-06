@@ -6,6 +6,7 @@ from data import *
 from bs4 import BeautifulSoup
 import requests
 import os
+from data import convert_time
 
 app = Flask(__name__)
 
@@ -112,9 +113,14 @@ def github_repos():
     lectures = Lecture.query.all()
     exercises = Exercise.query.all()
     gitusers = GitUser.query.all()
-    gitrepos = GitRepo.query.all()
+    gitrepos = GitRepo.query.order_by(GitRepo.repo_push.desc()).limit(30).all()
     extras = Resource.query.order_by(Resource.title).all()
     timestamp = Timestamp.query.one()
+
+    for user in gitusers:
+        for repo in user.repos:
+            time = repo.repo_push
+            repo.repo_push = convert_time(time)
 
     return render_template('github-users.html',
                            lectures=lectures,

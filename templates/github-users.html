@@ -22,7 +22,7 @@
 
           <div class="collapsible-body">
 
-            {% for repo in user.repos|sort(reverse=True,attribute="repo_push") %}
+            {% for repo in user.repos %}
             <a target="_blank" href="https://www.github.com/{{ repo.repo_name }}">
               <p class="repo">
                 {{ repo.repo_name }}
