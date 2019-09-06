@@ -36,7 +36,25 @@ def parse_data(parsed_json):
     db.session.commit()
 
     for item in parsed_json:
-        if item['type'] == 'PushEvent':
+
+        # Check if repo exists
+        if item['type'] == 'CreateEvent':
+
+            if item['payload']['ref_type'] == 'repository':
+                repo_name = item['repo']['name']
+                repo_url = item['repo']['url']
+                repo_push = item['created_at']
+                repo_owner = new_user.id
+
+                new_repo = GitRepo(repo_name=repo_name,
+                                   repo_url=repo_url,
+                                   repo_push=repo_push,
+                                   repo_commit='[ repo created ]',
+                                   repo_owner=repo_owner)
+
+                db.session.add(new_repo)
+
+        elif item['type'] == 'PushEvent':
             repo_name = item['repo']['name']
             repo_url = item['repo']['url']
             repo_push = item['created_at']
