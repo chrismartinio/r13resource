@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
       let url = $(this).data('lecture-url');
       let title = $(this).data('lecture-title');
       // $('#main').html(`<iframe src='${url}'></iframe>`);
-      $('#main').html('http://curric.rithmschool.com/r13/lectures/flask-hashing-login/');
+      $('#main').html(`<iframe src='http://curric.rithmschool.com/r13/lectures/flask-hashing-login/'></iframe>`);
       document.title = `r13 | ${title}`;
     });
   });
