@@ -21,7 +21,7 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def get_all_lectures():
 
-    response = requests.get('https://curric.rithmschool.com/r13/lectures/')
+    response = requests.get('http://curric.rithmschool.com/r13/lectures/')
     soup = BeautifulSoup(response.text)
     links = []
 
@@ -37,7 +37,7 @@ def get_all_lectures():
         if 'zip' in link:
             continue
         response = requests.get(
-            'https://curric.rithmschool.com/r13/lectures/' + link)
+            'http://curric.rithmschool.com/r13/lectures/' + link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
@@ -46,7 +46,7 @@ def get_all_lectures():
         else:
             new_lecture = Lecture(
                 title=link,
-                url='https://curric.rithmschool.com/r13/lectures/' + link)
+                url='http://curric.rithmschool.com/r13/lectures/' + link)
             db.session.add(new_lecture)
 
     db.session.commit()
@@ -55,7 +55,7 @@ def get_all_lectures():
 @manager.command
 def get_all_exercises():
 
-    response = requests.get('https://curric.rithmschool.com/r13/exercises/')
+    response = requests.get('http://curric.rithmschool.com/r13/exercises/')
     soup = BeautifulSoup(response.text)
     links = []
 
@@ -78,7 +78,7 @@ def get_all_exercises():
             continue
 
         response = requests.get(
-            'https://curric.rithmschool.com/r13/exercises/' + link)
+            'http://curric.rithmschool.com/r13/exercises/' + link)
         soup = BeautifulSoup(response.text)
         if (soup.title is None):
             continue
@@ -87,7 +87,7 @@ def get_all_exercises():
         else:
             new_exercise = Exercise(
                 title=link,
-                url='https://curric.rithmschool.com/r13/exercises/' + link)
+                url='http://curric.rithmschool.com/r13/exercises/' + link)
             db.session.add(new_exercise)
 
     db.session.commit()
