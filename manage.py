@@ -46,7 +46,7 @@ def get_all_lectures():
         else:
             new_lecture = Lecture(
                 title=link,
-                url='https://curric.rithmschool.com/r13/lectures/' + link)
+                url='http://curric.rithmschool.com/r13/lectures/' + link)
             db.session.add(new_lecture)
 
     db.session.commit()
@@ -87,7 +87,7 @@ def get_all_exercises():
         else:
             new_exercise = Exercise(
                 title=link,
-                url='https://curric.rithmschool.com/r13/exercises/' + link)
+                url='http://curric.rithmschool.com/r13/exercises/' + link)
             db.session.add(new_exercise)
 
     db.session.commit()
