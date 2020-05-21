@@ -82,7 +82,7 @@ class Timestamp(db.Model):
 class LocalUser(db.Model):
     """ Local user database """
 
-    __table_name__ = 'local_user'
+    __table_name__ = 'local_user2'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     localuser = db.Column(db.Text, nullable=False)
